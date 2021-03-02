@@ -68,11 +68,18 @@ namespace CSS_Converter_App
             var path = System.IO.Path.Join(Directory.GetCurrentDirectory(), "exec");
             if (!Directory.Exists(path))
             {
-                MessageBox.Show("No se encontro ningun ejecutable. Por favor guardarlo en la carpeta \"exec\", y reiniciar el programa");
+                ExeNotFoundHandler();
                 return;
             }
 
-            foreach (var file in Directory.GetFiles(path, "*.exe"))
+            var execs = Directory.GetFiles(path, "*.exe");
+            if (execs.Length == 0)
+            {
+                ExeNotFoundHandler();
+                return;
+            }
+
+            foreach (var file in execs)
             {
                 files.Add(file);
                 this.ExecList.Items.Add(System.IO.Path.GetFileName(file));
@@ -97,6 +104,11 @@ namespace CSS_Converter_App
                 ProgramOutputs.Foreground = Brushes.Red;
                 ProgramOutputs.AppendText(output);
             }));
+        }
+
+        private void ExeNotFoundHandler()
+        {
+            MessageBox.Show("No se encontro ningun ejecutable. Por favor guardarlo en la carpeta \"exec\", y reiniciar el programa");
         }
     }
 }
