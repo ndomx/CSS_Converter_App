@@ -66,6 +66,12 @@ namespace CSS_Converter_App
         private void FillComboBox()
         {
             var path = System.IO.Path.Join(Directory.GetCurrentDirectory(), "exec");
+            if (!Directory.Exists(path))
+            {
+                MessageBox.Show("No se encontro ningun ejecutable. Por favor guardarlo en la carpeta \"exec\", y reiniciar el programa");
+                return;
+            }
+
             foreach (var file in Directory.GetFiles(path, "*.exe"))
             {
                 files.Add(file);
