@@ -5,8 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSS_Converter_App"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="350" Width="600">
+    <Border Padding="10">
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="File select"/>
+            <Grid Margin="0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-    </Grid>
+                <TextBox Padding="2" Grid.Column="0" Margin="0 0 10 0" IsReadOnly="True" x:Name="FileName"/>
+                <Button Content="Select" Grid.Column="1" x:Name="FileSelect" Click="FileSelect_Click"/>
+            </Grid>
+
+            <TextBlock Text="Program" />
+            <ComboBox SelectedIndex="0" Margin="0 10" x:Name="ExecList"/>
+
+            <TextBlock Text="Outputs" />
+            <TextBox Height="100" Margin="0 10" IsReadOnly="True" x:Name="ProgramOutputs"/>
+
+            <Button Content="Run" x:Name="RunButton" Click="RunButton_Click"/>
+        </StackPanel>
+    </Border>
 </Window>
