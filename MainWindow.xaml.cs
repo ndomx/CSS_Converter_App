@@ -46,8 +46,11 @@ namespace CSS_Converter_App
             var program = files[index];
             var file = this.FileName.Text;
 
+            var output = System.IO.Path.Join(Directory.GetCurrentDirectory(), "outputs");
+            Directory.CreateDirectory(output);
+
             ProgramOutputs.Text = "";
-            ProgramOutputs.AppendText($"cmd.exe /C {program} {file}");
+            ProgramOutputs.AppendText($"cmd.exe /C {program} {file} -O {output}");
 
             var startInfo = new ProcessStartInfo();
             startInfo.UseShellExecute = false;
@@ -55,7 +58,7 @@ namespace CSS_Converter_App
             startInfo.RedirectStandardError = true;
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = $"/C {program} {file}";
+            startInfo.Arguments = $"/C {program} {file} -O {output}";
 
             var process = new Process();
             process.StartInfo = startInfo;
