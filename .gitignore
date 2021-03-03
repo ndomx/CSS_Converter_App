@@ -444,3 +444,6 @@ $RECYCLE.BIN/
 exec/
 data/
 outputs/
+
+*.rar
+*.zip
