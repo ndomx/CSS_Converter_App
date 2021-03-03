@@ -4,6 +4,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -67,6 +68,9 @@ namespace CSS_Converter_App
             process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
+
+            Thread thread = new Thread(MonitorProcess);
+            thread.Start(process);
         }
 
         private void FillComboBox()
@@ -98,7 +102,7 @@ namespace CSS_Converter_App
             Dispatcher.BeginInvoke((Action)(() =>
             {
                 // ProgramOutputs.Foreground = Brushes.Black;
-                ProgramOutputs.AppendText(e.Data + Environment.NewLine);
+                ProgramOutputs.AppendText(output);
             }));
         }
 
@@ -115,6 +119,22 @@ namespace CSS_Converter_App
         private void ExeNotFoundHandler()
         {
             MessageBox.Show("No se encontro ningun ejecutable. Por favor guardarlo en la carpeta \"exec\", y reiniciar el programa");
+        }
+
+        private void MonitorProcess(object process)
+        {
+            ((Process)process).WaitForExit();
+
+            var code = ((Process)process).ExitCode;
+            if (code != 0)
+            {
+                Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("Error")));
+            }
+            else
+            {
+                Dispatcher.BeginInvoke((Action)(() => MessageBox.Show("Done")));
+            }
+
         }
     }
 }
