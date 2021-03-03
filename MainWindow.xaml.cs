@@ -46,13 +46,16 @@ namespace CSS_Converter_App
             var program = files[index];
             var file = this.FileName.Text;
 
+            ProgramOutputs.Text = "";
+            ProgramOutputs.AppendText($"cmd.exe /C {program} {file}");
+
             var startInfo = new ProcessStartInfo();
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = true;
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/C python " + file;
+            startInfo.Arguments = $"/C {program} {file}";
 
             var process = new Process();
             process.StartInfo = startInfo;
@@ -91,7 +94,7 @@ namespace CSS_Converter_App
             var output = e.Data + Environment.NewLine;
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                ProgramOutputs.Foreground = Brushes.Black;
+                // ProgramOutputs.Foreground = Brushes.Black;
                 ProgramOutputs.AppendText(e.Data + Environment.NewLine);
             }));
         }
@@ -101,7 +104,7 @@ namespace CSS_Converter_App
             var output = e.Data + Environment.NewLine;
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                ProgramOutputs.Foreground = Brushes.Red;
+                // ProgramOutputs.Foreground = Brushes.Red;
                 ProgramOutputs.AppendText(output);
             }));
         }
